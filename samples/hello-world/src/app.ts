@@ -32,7 +32,7 @@ export default class HelloWorld {
 					app: { position: { x: 0, y: 0.5, z: 0 } }
 				},
 				text: {
-					contents: "Hello World!",
+					contents: "SPANISH IMMERSIVE!",
 					anchor: MRE.TextAnchorLocation.MiddleCenter,
 					color: { r: 30 / 255, g: 206 / 255, b: 213 / 255 },
 					height: 0.3
@@ -66,7 +66,7 @@ export default class HelloWorld {
 			{ isPlaying: true, wrapMode: MRE.AnimationWrapMode.PingPong });
 
 		// Load a glTF model before we use it
-		const cubeData = await this.assets.loadGltf('altspace-cube.glb', "box");
+		const cubeData = await this.assets.loadGltf('jamon.glb', "box");
 
 		// spawn a copy of the glTF model
 		this.cube = MRE.Actor.CreateFromPrefab(this.context, {
@@ -74,13 +74,13 @@ export default class HelloWorld {
 			firstPrefabFrom: cubeData,
 			// Also apply the following generic actor properties.
 			actor: {
-				name: 'Altspace Cube',
+				name: 'Jamon',
 				// Parent the glTF model to the text actor, so the transform is relative to the text
 				parentId: this.text.id,
 				transform: {
 					local: {
 						position: { x: 0, y: -1, z: 0 },
-						scale: { x: 0.4, y: 0.4, z: 0.4 }
+						scale: { x: 2, y: 2, z: 2 }
 					}
 				}
 			}
