@@ -12,7 +12,7 @@ export default class HelloWorld {
 	private text: MRE.Actor = null;
 	private cube: MRE.Actor = null;
 	private assets: MRE.AssetContainer;
-
+	
 	constructor(private context: MRE.Context) {
 		this.context.onStarted(() => this.started());
 	}
@@ -34,7 +34,7 @@ export default class HelloWorld {
 				text: {
 					contents: "SPANISH IMMERSIVE!",
 					anchor: MRE.TextAnchorLocation.MiddleCenter,
-					color: { r: 30 / 255, g: 206 / 255, b: 213 / 255 },
+					color: { r: 255 / 255, g: 195 / 255, b: 0 / 255 },
 					height: 0.3
 				}
 			}
@@ -51,11 +51,11 @@ export default class HelloWorld {
 				// and the values you want to change it to.
 				tracks: [{
 					// This animation targets the rotation of an actor named "text"
-					target: MRE.ActorPath("text").transform.local.rotation,
+					target: MRE.ActorPath("text").transform.local.position,
 					// And the rotation will be set to spin over 20 seconds
 					keyframes: this.generateSpinKeyframes(20, MRE.Vector3.Up()),
 					// And it will move smoothly from one frame to the next
-					easing: MRE.AnimationEaseCurves.Linear
+					easing: MRE.AnimationEaseCurves.EaseOutSine
 				}]
 			});
 		// Once the animation data is created, we can create a real animation from it.
@@ -63,10 +63,10 @@ export default class HelloWorld {
 			// We assign our text actor to the actor placeholder "text"
 			{ text: this.text },
 			// And set it to play immediately, and bounce back and forth from start to end
-			{ isPlaying: true, wrapMode: MRE.AnimationWrapMode.PingPong });
+			{ isPlaying: true, wrapMode: MRE.AnimationWrapMode.Loop });
 
 		// Load a glTF model before we use it
-		const cubeData = await this.assets.loadGltf('jamon.glb', "box");
+		const cubeData = await this.assets.loadGltf('altspace-cube.glb', "box");
 
 		// spawn a copy of the glTF model
 		this.cube = MRE.Actor.CreateFromPrefab(this.context, {
@@ -74,13 +74,13 @@ export default class HelloWorld {
 			firstPrefabFrom: cubeData,
 			// Also apply the following generic actor properties.
 			actor: {
-				name: 'Jamon',
+				name: 'SPAIM Cube',
 				// Parent the glTF model to the text actor, so the transform is relative to the text
 				parentId: this.text.id,
 				transform: {
 					local: {
 						position: { x: 0, y: -1, z: 0 },
-						scale: { x: 2, y: 2, z: 2 }
+						scale: { x: 0.4, y: 0.4, z: 0.4 }
 					}
 				}
 			}
@@ -94,9 +94,9 @@ export default class HelloWorld {
 				// applies to the rotation of an unknown actor we'll refer to as "target"
 				target: MRE.ActorPath("target").transform.local.rotation,
 				// do a spin around the X axis over the course of one second
-				keyframes: this.generateSpinKeyframes(1.0, MRE.Vector3.Right()),
+				keyframes: this.generateSpinKeyframes(4.0, MRE.Vector3.Right()),
 				// and do it smoothly
-				easing: MRE.AnimationEaseCurves.Linear
+				easing: MRE.AnimationEaseCurves.EaseInSine
 			}]}
 		);
 		// apply the animation to our cube
