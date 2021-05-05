@@ -97,7 +97,7 @@ export default class TicTacToe {
 				parentId: this.textAnchor.id,
 				name: 'Text',
 				transform: {
-					local: { position: { x: 0, y: 0.0, z: -1 } }
+					local: { position: { x: 0, y: 0.0, z: -1.5 } }
 				},
 				text: {
 					// NOTE: this is NOT the spinning text you see in your world
