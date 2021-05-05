@@ -12,8 +12,8 @@ enum GameState {
 }
 
 enum GamePiece {
-	X,
-	O
+	CUADRADO,
+	CIRCULO
 }
 
 /**
@@ -97,14 +97,14 @@ export default class TicTacToe {
 				parentId: this.textAnchor.id,
 				name: 'Text',
 				transform: {
-					local: { position: { x: 0, y: 0.0, z: -1.5 } }
+					local: { position: { x: 0, y: 0.0, z: -1 } }
 				},
 				text: {
 					// NOTE: this is NOT the spinning text you see in your world
 					// that Tic-Tac-Toe! text is in the beginGameStateIntro() function below
-					contents: "Tic-Tac-Toe!",
+					contents: "TRES EN RAYA!",
 					anchor: MRE.TextAnchorLocation.MiddleCenter,
-					color: { r: 30 / 255, g: 206 / 255, b: 213 / 255 },
+					color: { r: 225 / 255, g: 159 / 255, b: 0 / 255 },
 					height: 0.3
 				},
 			}
@@ -180,7 +180,7 @@ export default class TicTacToe {
 					firstPrefabFrom: gltf,
 					// Also apply the following generic actor properties.
 					actor: {
-						name: 'Altspace Cube',
+						name: 'SPAIM Cube',
 						transform: {
 							app: {
 								position: { x: (tileIndexX) - 1.0, y: 0.5, z: (tileIndexZ) - 1.0 },
@@ -224,16 +224,16 @@ export default class TicTacToe {
 						case GameState.Play:
 							// When clicked, put down a tile, and do a victory check
 							if (this.boardState[tileIndexX * 3 + tileIndexZ] === undefined) {
-								MRE.log.info("app", "Putting an " + GamePiece[this.currentPlayerGamePiece] +
-									" on: (" + tileIndexX + "," + tileIndexZ + ")");
+								MRE.log.info("app", "PON UN " + GamePiece[this.currentPlayerGamePiece] +
+									" EN: (" + tileIndexX + "," + tileIndexZ + ")");
 								const gamePiecePosition = new MRE.Vector3(
 									cube.transform.local.position.x,
 									cube.transform.local.position.y + 0.55,
 									cube.transform.local.position.z);
-								if (this.currentPlayerGamePiece === GamePiece.O) {
+								if (this.currentPlayerGamePiece === GamePiece.CIRCULO) {
 									this.gamePieceActors.push(MRE.Actor.Create(this.context, {
 										actor: {
-											name: 'O',
+											name: 'CIRCULO',
 											appearance: { meshId: circle.id },
 											transform: {
 												local: { position: gamePiecePosition }
@@ -243,7 +243,7 @@ export default class TicTacToe {
 								} else {
 									this.gamePieceActors.push(MRE.Actor.Create(this.context, {
 										actor: {
-											name: 'X',
+											name: 'CUADRADO',
 											appearance: { meshId: square.id },
 											transform: {
 												local: { position: gamePiecePosition }
@@ -259,7 +259,7 @@ export default class TicTacToe {
 								this.currentPlayerGamePiece = this.nextPlayerGamePiece;
 								this.nextPlayerGamePiece = tempGamePiece;
 
-								this.text.text.contents = "Next Piece: " + GamePiece[this.currentPlayerGamePiece];
+								this.text.text.contents = "TU TURNO: " + GamePiece[this.currentPlayerGamePiece];
 
 								for (const victoryCheck of this.victoryChecks) {
 									if (this.boardState[victoryCheck[0]] !== undefined &&
@@ -300,21 +300,21 @@ export default class TicTacToe {
 		this.light.light.color = { r: 0.3, g: 1.0, b: 0.3 };
 
 		if (winner === undefined) {
-			MRE.log.info("app", "Tie");
-			this.text.text.contents = "Tie";
+			MRE.log.info("app", "EMPATE");
+			this.text.text.contents = "EMPATE";
 		} else {
-			MRE.log.info("app", "Winner: " + GamePiece[winner]);
-			this.text.text.contents = "Winner: " + GamePiece[winner];
+			MRE.log.info("app", "GANADOR: " + GamePiece[winner]);
+			this.text.text.contents = "GANADOR: " + GamePiece[winner];
 		}
 	}
 
 	private beginGameStateIntro() {
 		MRE.log.info("app", "BeginGameState Intro");
 		this.gameState = GameState.Intro;
-		this.text.text.contents = "Tic-Tac-Toe\nClick To Play";
+		this.text.text.contents = "TRES EN RAYA\nCLICA Y JUEGA";
 
-		this.currentPlayerGamePiece = GamePiece.X;
-		this.nextPlayerGamePiece = GamePiece.O;
+		this.currentPlayerGamePiece = GamePiece.CUADRADO;
+		this.nextPlayerGamePiece = GamePiece.CIRCULO;
 		this.boardState = [];
 		this.light.light.color = { r: 1, g: 0.6, b: 0.3 };
 
@@ -329,7 +329,7 @@ export default class TicTacToe {
 	private beginGameStatePlay() {
 		MRE.log.info("app", "BeginGameState Play");
 		this.gameState = GameState.Play;
-		this.text.text.contents = "First Piece: " + GamePiece[this.currentPlayerGamePiece];
+		this.text.text.contents = "EMPIEZA EL: " + GamePiece[this.currentPlayerGamePiece];
 	}
 
 	/**
